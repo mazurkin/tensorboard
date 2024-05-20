@@ -12,7 +12,7 @@ DOCKER_NAME = tensorflow/tensorflow
 DOCKER_TAG  = 2.16.1
 
 TB_INSTANCE  ?= 0
-TB_FOLDER    ?= /tmp/tensorboard-$(TB_INSTANCE)
+TB_FOLDER    ?= /tmp/tensorboard/$(TB_INSTANCE)
 TB_NAME      ?= tensorboard-$(TB_INSTANCE)
 TB_PORT      ?= $$(( 6006 + $(TB_INSTANCE) ))
 
