@@ -12,15 +12,17 @@ DOCKER_NAME = tensorflow/tensorflow
 DOCKER_TAG  = 2.16.1
 
 TB_INSTANCE  ?= 0
-TB_FOLDER    ?= /tmp/tensorboard/$(TB_INSTANCE)
+TB_FOLDER    ?= /tmp/tensorboard-$(TB_INSTANCE)
 TB_NAME      ?= tensorboard-$(TB_INSTANCE)
 TB_PORT      ?= $$(( 6006 + $(TB_INSTANCE) ))
 
 .PHONY: run
 run:
-	@echo "TB name: $(TB_NAME)"
-	@echo "TB port: $(TB_PORT)"
-	@echo "TB dir : $(TB_FOLDER)"
+	@echo "TB link      : http://localhost:$(TB_PORT)"
+	@echo "TB instance  : $(TB_INSTANCE)"
+	@echo "TB directory : $(TB_FOLDER)"
+	@echo "TB name      : $(TB_NAME)"
+	@echo "TB port      : $(TB_PORT)"
 	@mkdir -p "$(TB_FOLDER)"
 	@docker run \
 		--name "$(TB_NAME)" \
@@ -29,11 +31,13 @@ run:
 		--interactive \
 		--tty \
 		--cpus 1 \
-		--memory 1GB \
+		--memory 512MB \
+		--env "TF_ENABLE_ONEDNN_OPTS=0" \
 		--volume "$(TB_FOLDER):/tmp/tensorboard" \
 		--publish "0.0.0.0:$(TB_PORT):6006/tcp" \
 		$(DOCKER_NAME):$(DOCKER_TAG) \
 			tensorboard \
 				--port 6006 \
 				--bind_all \
+				--load_fast=false \
 				--logdir "/tmp/tensorboard"
