@@ -16,8 +16,10 @@ TB_FOLDER    ?= /tmp/tensorboard/$(TB_INSTANCE)
 TB_NAME      ?= tensorboard-$(TB_INSTANCE)
 TB_PORT      ?= $$(( 6006 + $(TB_INSTANCE) ))
 
-.PHONY: run
-run:
+.DEFAULT_GOAL = docker-run
+
+.PHONY: docker-run
+docker-run:
 	@echo "TB link      : http://localhost:$(TB_PORT)"
 	@echo "TB instance  : $(TB_INSTANCE)"
 	@echo "TB directory : $(TB_FOLDER)"
