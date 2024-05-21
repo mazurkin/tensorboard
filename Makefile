@@ -35,7 +35,7 @@ docker-run:
 		--cpus 1 \
 		--memory 512MB \
 		--env "TF_ENABLE_ONEDNN_OPTS=0" \
-		--volume "$(TB_FOLDER):/tmp/tensorboard" \
+		--volume "$(TB_FOLDER):/tmp/tensorboard:ro" \
 		--publish "0.0.0.0:$(TB_PORT):6006/tcp" \
 		$(DOCKER_NAME):$(DOCKER_TAG) \
 			tensorboard \
